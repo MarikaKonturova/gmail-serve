@@ -17,8 +17,27 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/", async (req, res) => {
+  console.log(process.env.PASS)
+  let info = await transporter.sendMail({
+    from: '"MY PROFILE PAGE', // sender address
+    to: "healthyandhappy.cuisine@gmail.com", // list of receivers
+    subject: "MY PROFILE PAGE SEND ME A MESSAGE", // Subject line
+    /// text: "", // plain text body
+    html: `
+    <b>Привет! меня зовут ${req.body.name}</b> 
+    <div>
+    Вот сообщение: ${req.body.text}
+    </div>
+    <div>
+    Мой email: ${req.body.email} 
+    </div>
+    <div>
+    зачем-то ссылка <a href='https://www.google.com/' >ссылка</a>
+    </div>
+    `, // html body
+  });
+  res.status(201).send("Hello World!");
 });
 
 app.post("/sendMessage", async (req, res) => {
