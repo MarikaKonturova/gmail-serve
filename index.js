@@ -2,7 +2,7 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-require('dotenv').config()
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -12,55 +12,43 @@ const port = process.env.PORT || 8080;
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL , // generated ethereal user
+    user: process.env.EMAIL, // generated ethereal user
     pass: process.env.PASS, // generated ethereal password
   },
 });
 
 app.get("/", async (req, res) => {
-  console.log(process.env.PASS)
-  let info = await transporter.sendMail({
-    from: '"MY PROFILE PAGE', // sender address
-    to: "healthyandhappy.cuisine@gmail.com", // list of receivers
-    subject: "MY PROFILE PAGE SEND ME A MESSAGE", // Subject line
-    /// text: "", // plain text body
-    html: `
-    <b>Привет! меня зовут holy</b> 
-    <div>
-    Вот сообщение: holy
-    </div>
-    <div>
-    Мой email: holy
-    </div>
-    <div>
-    зачем-то ссылка <a href='https://www.google.com/' >ссылка</a>
-    </div>
-    `, // html body
-  });
+  console.log(process.env.PASS);
   res.status(201).send("Hello Holy!");
 });
 
 app.post("/sendMessage", async (req, res) => {
-  console.log(process.env.PASS)
-  let info = await transporter.sendMail({
-    from: '"MY PROFILE PAGE', // sender address
-    to: "healthyandhappy.cuisine@gmail.com", // list of receivers
-    subject: "MY PROFILE PAGE SEND ME A MESSAGE", // Subject line
-    /// text: "", // plain text body
-    html: `
-    <b>Привет! меня зовут ${req.body.name}</b> 
-    <div>
-    Вот сообщение: ${req.body.text}
-    </div>
-    <div>
-    Мой email: ${req.body.email} 
-    </div>
-    <div>
-    зачем-то ссылка <a href='https://www.google.com/' >ссылка</a>
-    </div>
-    `, // html body
-  });
-  res.status(201).send({body: req.body , message: 'ваше сообщение отправлено'});
+  console.log(process.env.PASS);
+  try {
+    let info = await transporter.sendMail({
+      from: '"MY PROFILE PAGE', // sender address
+      to: "healthyandhappy.cuisine@gmail.com", // list of receivers
+      subject: "MY PROFILE PAGE SEND ME A MESSAGE", // Subject line
+      /// text: "", // plain text body
+      html: `
+      <b>Привет! меня зовут ${req.body.name}</b> 
+      <div>
+      Вот сообщение: ${req.body.text}
+      </div>
+      <div>
+      Мой email: ${req.body.email} 
+      </div>
+      <div>
+      зачем-то ссылка <a href='https://www.google.com/' >ссылка</a>
+      </div>
+      `, // html body
+    });
+    res
+      .status(201)
+      .send({ body: req.body, message: "ваше сообщение отправлено" });
+  } catch (err) {
+    res.status(415).send(err.message);
+  }
 });
 
 app.listen(port, () => {
