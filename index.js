@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/sendMessage", async (req, res) => {
+  console.log(process.env.PASS)
   let info = await transporter.sendMail({
     from: '"MY PROFILE PAGE', // sender address
     to: "healthyandhappy.cuisine@gmail.com", // list of receivers
