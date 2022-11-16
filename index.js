@@ -25,19 +25,19 @@ app.get("/", async (req, res) => {
     subject: "MY PROFILE PAGE SEND ME A MESSAGE", // Subject line
     /// text: "", // plain text body
     html: `
-    <b>Привет! меня зовут ${req.body.name}</b> 
+    <b>Привет! меня зовут holy</b> 
     <div>
-    Вот сообщение: ${req.body.text}
+    Вот сообщение: holy
     </div>
     <div>
-    Мой email: ${req.body.email} 
+    Мой email: holy
     </div>
     <div>
     зачем-то ссылка <a href='https://www.google.com/' >ссылка</a>
     </div>
     `, // html body
   });
-  res.status(201).send("Hello World!");
+  res.status(201).send("Hello Holy!");
 });
 
 app.post("/sendMessage", async (req, res) => {
