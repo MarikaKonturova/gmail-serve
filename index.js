@@ -40,7 +40,7 @@ app.post("/sendMessage", async (req, res) => {
     </div>
     `, // html body
   });
-  res.send({body: req.body , message: 'ваше сообщение отправлено'});
+  res.status(201).send({body: req.body , message: 'ваше сообщение отправлено'});
 });
 
 app.listen(port, () => {
